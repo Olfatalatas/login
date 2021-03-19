@@ -7,6 +7,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String value;
+  String value2;
+
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -20,8 +23,11 @@ class _LoginPageState extends State<LoginPage> {
 
     final email = TextFormField(
       keyboardType: TextInputType.emailAddress,
+      onChanged: (text) {
+        value = text;
+      },
       autofocus: false,
-      initialValue: 'example@gmail.com',
+      initialValue: '',
       decoration: InputDecoration(
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -30,8 +36,11 @@ class _LoginPageState extends State<LoginPage> {
     );
 
     final password = TextFormField(
+      onChanged: (text) {
+        value2 = text;
+      },
       autofocus: false,
-      initialValue: 'password',
+      initialValue: '',
       obscureText: true,
       decoration: InputDecoration(
         hintText: 'Password',
@@ -43,13 +52,17 @@ class _LoginPageState extends State<LoginPage> {
     final loginButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: Material(
-        borderRadius: BorderRadius.circular(30.0),
+        borderRadius: BorderRadius.circular(32.0),
         shadowColor: Colors.lightBlueAccent.shade100,
         elevation: 5.0,
         child: MaterialButton(
           minWidth: 200.0,
           height: 42.0,
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => HomePage(value: value, value2: value2),
+            ));
+          },
           color: Colors.lightBlueAccent,
           child: Text('Log In', style: TextStyle(color: Colors.white)),
         ),
@@ -83,6 +96,63 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class HomePage extends StatelessWidget {
+  static String tag = 'home-page';
+  String value;
+  String value2;
+  HomePage({this.value, this.value2});
+
+  @override
+  Widget build(BuildContext context) {
+    final profil = Hero(
+      tag: 'hero',
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: CircleAvatar(
+          radius: 72.0,
+          backgroundColor: Colors.transparent,
+          backgroundImage: AssetImage('assets/images/profil.png'),
+        ),
+      ),
+    );
+
+    final welcome = Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text(
+        "$value \n $value2",
+        style: TextStyle(fontSize: 28.0, color: Colors.white),
+      ),
+    );
+
+    final text = Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Text(
+        'Welcome to the Home Page ',
+        style: TextStyle(fontSize: 16.0, color: Colors.white),
+      ),
+    );
+
+    final body = Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.all(28.0),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(colors: [
+          Colors.indigo,
+          Colors.indigoAccent,
+        ]),
+      ),
+      child: Column(
+        children: <Widget>[profil, welcome, text],
+      ),
+    );
+
+    return Scaffold(
+      body: body,
     );
   }
 }
