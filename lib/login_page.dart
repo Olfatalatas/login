@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'api_list.dart';
+
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
   @override
@@ -124,17 +126,29 @@ class HomePage extends StatelessWidget {
     final welcome = Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        "$value \n $value2",
-        style: TextStyle(fontSize: 28.0, color: Colors.white),
+        "Anda Login Sebagai : $value \n\n Dengan Password : $value2",
+        style: TextStyle(fontSize: 20.0, color: Colors.white),
       ),
     );
 
     final text = Padding(
       padding: EdgeInsets.all(8.0),
       child: Text(
-        'Welcome to the Home Page ',
-        style: TextStyle(fontSize: 16.0, color: Colors.white),
+        'Welcome',
+        style: TextStyle(fontSize: 28.0, color: Colors.white),
       ),
+    );
+
+    final button = FlatButton(
+      child: Text(
+        'Tap This To See Users',
+        style: TextStyle(color: Colors.white),
+      ),
+      onPressed: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => Listapi(),
+        ));
+      },
     );
 
     final body = Container(
@@ -147,7 +161,7 @@ class HomePage extends StatelessWidget {
         ]),
       ),
       child: Column(
-        children: <Widget>[profil, welcome, text],
+        children: <Widget>[profil, welcome, text, button],
       ),
     );
 
